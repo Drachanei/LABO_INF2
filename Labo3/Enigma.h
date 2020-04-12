@@ -14,22 +14,21 @@
 
 class Enigma {
 public:
-    /** ---------------- Constructeur ---------------- **/
+    /** ---------------- Constructors ---------------- **/
     Enigma(){};
     Enigma(Rotor& leftRotor, Rotor& middleRotor, Rotor& rightRotor, Reflector& reflector);
 
 
-    /** ---------------- Fonctions ---------------- **/
-    char keyboard(char C);
-    void debug(char C);
+    /** ---------------- Fuctions ---------------- **/
+    char convert(char C, bool debug = false);
 
     void getConfig();
 
 
 
 private:
-    Rotor *leftRotor, *middleRotor, *rightRotor;
-    Reflector *reflector;
+    Rotor leftRotor, middleRotor, rightRotor;
+    Reflector reflector;
 
     const std::string ENTRY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

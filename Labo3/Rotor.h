@@ -19,6 +19,7 @@ public:
 
     std::string getRotorId();
     void getRotorConfig();
+    char getRotorPos();
 
     bool moveRotorNext();
 

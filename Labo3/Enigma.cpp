@@ -7,77 +7,69 @@
 #include <iostream>
 using namespace std;
 
-Enigma::Enigma(Rotor &leftRotor, Rotor &middleRotor, Rotor &rightRotor, Reflector &reflector) {
-
-    this->leftRotor = &leftRotor;
-    this->middleRotor = &middleRotor;
-    this->rightRotor = &rightRotor;
-
-    this->reflector = &reflector;
-
+Enigma::Enigma(Rotor &leftRotor, Rotor &middleRotor, Rotor &rightRotor, Reflector &reflector) :
+leftRotor(leftRotor), middleRotor(middleRotor), rightRotor(rightRotor), reflector(reflector){
 }
 
-char Enigma::keyboard(char C) {
-    bool rightRotorNotch = rightRotor->moveRotorNext();
+char Enigma::convert(char C, bool debug) {
+    bool rightRotorNotch = rightRotor.moveRotorNext();
 
     size_t posETW = ENTRY.find(toupper(C));
 
-    size_t temp_right, temp_middle, temp_left;
+    size_t leftOutput, middleOutput, rightOutput,
+            leftOutput_R, middleOutput_R, rightOutput_R;
 
-    temp_right = rightRotor->outputPos(posETW);
-    temp_middle = middleRotor->outputPos(temp_right);
-    temp_left = leftRotor->outputPos(temp_middle);
-    size_t temp_ref = reflector->reflect(temp_left);
-    temp_left = leftRotor->outputPos(temp_ref, true);
-    temp_middle = middleRotor->outputPos(temp_left, true);
-    temp_right = rightRotor->outputPos(temp_middle, true);
+
+
+
+
+    rightOutput = rightRotor.outputPos(posETW);
+    middleOutput = middleRotor.outputPos(rightOutput);
+    leftOutput = leftRotor.outputPos(middleOutput);
+
+    size_t temp_ref = reflector.reflect(leftOutput);
+
+    leftOutput_R = leftRotor.outputPos(temp_ref, true);
+    middleOutput_R = middleRotor.outputPos(leftOutput_R, true);
+    rightOutput_R = rightRotor.outputPos(middleOutput_R, true);
 
     if(rightRotorNotch){
-        if(middleRotor->moveRotorNext()){
-            leftRotor->moveRotorNext();
+        if(middleRotor.moveRotorNext()){
+            leftRotor.moveRotorNext();
         }
     }
 
 
-    return ENTRY.at(temp_right);
+    if(debug){
+        char temp = C;
+        rightRotor.getRotorConfig();
+        cout << "result         : " << "[" << rightRotor.outputChar(rightOutput) << " <= " <<
+        rightRotor.outputChar(rightOutput, true) << "] <= " << temp << endl << endl;
+
+        middleRotor.getRotorConfig();
+        cout << "result         : " << "[" << middleRotor.outputChar(middleOutput) << " <= " <<
+        middleRotor.outputChar(middleOutput, true) << "] <= " << temp << endl << endl;
+
+        leftRotor.getRotorConfig();
+        cout << "result         : " << "[" << leftRotor.outputChar(leftOutput) << " <= " << leftRotor.outputChar(leftOutput, true) << "] <= " << temp << endl << endl;
+
+        reflector.getReflectorConfig();
+        cout << "result         : " << "[" << reflector.outputChar(leftOutput) << " <= " << reflector.outputChar(leftOutput, true) << "]" << endl;
+    }
+
+    return ENTRY.at(rightOutput_R);
 }
 
-void Enigma::debug(char C) {
-
-    size_t temp_right, temp_middle, temp_left;
-
-
-    temp_right = rightRotor->outputPos(1);
-    cout << temp_right << ' ' <<  rightRotor->outputChar(temp_right) << endl;
-
-    temp_middle = middleRotor->outputPos(temp_right);
-    cout << temp_middle << ' ' <<  middleRotor->outputChar(temp_middle) << endl;
-
-    temp_left = leftRotor->outputPos(temp_middle);
-    cout << temp_left << ' ' <<  leftRotor->outputChar(temp_left) << endl;
-
-    size_t temp_ref = reflector->reflect(temp_left);
-    cout << temp_ref << ' ' << reflector->reflectChar(temp_ref) << endl;
-
-    temp_left = leftRotor->outputPos(temp_ref, true);
-    cout << temp_left << ' ' <<  leftRotor->outputChar(temp_left, true) << endl;
-
-    temp_middle = middleRotor->outputPos(temp_left, true);
-    cout << temp_middle << ' ' <<  middleRotor->outputChar(temp_middle, true) << endl;
-
-    temp_right = rightRotor->outputPos(temp_middle, true);
-    cout << temp_right << ' ' <<  rightRotor->outputChar(temp_right, true) << endl;
-}
 
 void Enigma::getConfig() {
     cout << "CONFIGURATION SIMPLE" << endl << endl;
     cout << "LEFT rotor" << endl;
-    leftRotor->getRotorConfig();
+    leftRotor.getRotorConfig();
     cout << "MIDDLE rotor" << endl;
-    middleRotor->getRotorConfig();
+    middleRotor.getRotorConfig();
     cout << "RIGHT rotor" << endl;
-    rightRotor->getRotorConfig();
+    rightRotor.getRotorConfig();
     cout << "Reflector" << endl;
-    reflector->getReflectorConfig();
+    reflector.getReflectorConfig();
     cout << endl;
 }

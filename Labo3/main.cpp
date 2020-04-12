@@ -12,6 +12,20 @@ int main() {
     Rotor leftRotor1, middleRotor1, rightRotor1;
     Reflector reflector;
 
+
+    leftRotor1.setRotorId(3);
+    leftRotor1.setRotorPosition('A');
+    middleRotor1.setRotorId(2);
+    middleRotor1.setRotorPosition('A');
+    rightRotor1.setRotorId(1);
+    rightRotor1.setRotorPosition('A');
+
+
+    Enigma enigma1(leftRotor1, middleRotor1, rightRotor1, reflector);
+
+    cout << enigma1.convert('B',true);
+
+/*
     leftRotor1.setRotorId(2);
     leftRotor1.setRotorPosition('C');
     middleRotor1.setRotorId(4);
@@ -24,29 +38,31 @@ int main() {
 
     enigma1.getConfig();
 
-    string textChiffre = "CLZJVMUOAQAGFQJSMOYQLPLCTN";
-
-    for(char& c : textChiffre){
+    string cipherText = "CLZJVMUOAQAGFQJSMOYQLPLCTN";
+    cout << "Cipher Text : " << cipherText << endl << "Plain text : ";
+    for(char& c : cipherText){
         cout << enigma1.keyboard(c);
     }
 
     cout << endl;
 
+    leftRotor1.setRotorId(2);
+    leftRotor1.setRotorPosition('C');
+    middleRotor1.setRotorId(4);
+    middleRotor1.setRotorPosition('K');
+    rightRotor1.setRotorId(1);
+    rightRotor1.setRotorPosition('M');
 
-    Rotor leftRotor2, middleRotor2, rightRotor2;
-
-    leftRotor2.setRotorId(3);
-    leftRotor2.setRotorPosition('A');
-    middleRotor2.setRotorId(2);
-    middleRotor2.setRotorPosition('A');
-    rightRotor2.setRotorId(1);
-    rightRotor2.setRotorPosition('A');
-
-    Enigma enigma2(leftRotor2, middleRotor2, rightRotor2, reflector);
-
-    enigma2.debug('C');
+    Enigma enigma2(leftRotor1, middleRotor1, rightRotor1, reflector);
 
 
-    system("pause");
+    string plainText = "VIVELINFORMATIQUEALAHEIGVD";
+
+    for(char& c : plainText){
+        cout << enigma2.convert(c);
+    }
+*/
+    cout << endl;
+
     return EXIT_SUCCESS;
 }

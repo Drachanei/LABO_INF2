@@ -54,10 +54,9 @@ void Rotor::getRotorConfig() {
 
     cout << "rotor id       : " << getRotorId() << endl;
     cout << "entry          : " << ENTRY << endl;
-    cout << "wiring         : " << wiring << endl;
+    cout << "wiring         : " << ROTOR_WIRINGS.at(rotorId - 1) << endl;
     cout << "notch          : " << notch << endl;
-    cout << "poisition      : " << ENTRY.at(currentPos) << endl;
-    cout << endl;
+    cout << "poisition      : " << currentEntry.front() << endl;
 }
 
 
@@ -79,9 +78,14 @@ size_t Rotor::outputPos(size_t position, bool r) {
 
 char Rotor::outputChar(size_t position, bool r) {
     if(r){
-        return currentEntry.at(position);
+        size_t pos = wiring.find(currentEntry.at(position));
+        return currentEntry.at(pos);
     }
     return currentEntry.at(position);
+}
+
+char Rotor::getRotorPos() {
+    return currentEntry.front();
 }
 
 
