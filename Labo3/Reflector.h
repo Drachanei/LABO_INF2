@@ -15,6 +15,8 @@ public:
     size_t reflect(size_t pos);
     char reflectChar(size_t pos);
 
+    void getReflectorConfig();
+
 
 private:
     unsigned reflectorId = 1;

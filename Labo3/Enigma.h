@@ -18,7 +18,12 @@ public:
     Enigma(){};
     Enigma(Rotor& leftRotor, Rotor& middleRotor, Rotor& rightRotor, Reflector& reflector);
 
+
+    /** ---------------- Fonctions ---------------- **/
     char keyboard(char C);
+    void debug(char C);
+
+    void getConfig();
 
 
 

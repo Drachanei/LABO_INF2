@@ -3,6 +3,8 @@
 //
 
 #include "Reflector.h"
+#include <iostream>
+using namespace std;
 
 size_t Reflector::reflect(size_t pos) {
 
@@ -13,4 +15,10 @@ size_t Reflector::reflect(size_t pos) {
 
 char Reflector::reflectChar(size_t pos) {
     return ENTRY.at(pos);
+}
+
+void Reflector::getReflectorConfig() {
+    cout << "reflector      : " << "UKW-B" << endl;
+    cout << "entry          : " << ENTRY << endl;
+    cout << "wiring         : " << wiring << endl;
 }

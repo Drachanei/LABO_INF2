@@ -40,7 +40,13 @@ char Enigma::keyboard(char C) {
 
 
     return ENTRY.at(temp_right);
-/*
+}
+
+void Enigma::debug(char C) {
+
+    size_t temp_right, temp_middle, temp_left;
+
+
     temp_right = rightRotor->outputPos(1);
     cout << temp_right << ' ' <<  rightRotor->outputChar(temp_right) << endl;
 
@@ -61,10 +67,17 @@ char Enigma::keyboard(char C) {
 
     temp_right = rightRotor->outputPos(temp_middle, true);
     cout << temp_right << ' ' <<  rightRotor->outputChar(temp_right, true) << endl;
+}
 
-*/
-
-
-
-    return 0;
+void Enigma::getConfig() {
+    cout << "CONFIGURATION SIMPLE" << endl << endl;
+    cout << "LEFT rotor" << endl;
+    leftRotor->getRotorConfig();
+    cout << "MIDDLE rotor" << endl;
+    middleRotor->getRotorConfig();
+    cout << "RIGHT rotor" << endl;
+    rightRotor->getRotorConfig();
+    cout << "Reflector" << endl;
+    reflector->getReflectorConfig();
+    cout << endl;
 }

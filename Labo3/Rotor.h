@@ -15,8 +15,10 @@ public:
     Rotor(){};
 
     void setRotorId(unsigned id);
-    void getRotorId();
     void setRotorPosition(char position);
+
+    std::string getRotorId();
+    void getRotorConfig();
 
     bool moveRotorNext();
 
@@ -27,6 +29,7 @@ public:
 private:
     unsigned rotorId;
     char notch;
+    size_t currentPos;
     std::string currentEntry;
     std::string wiring;
 

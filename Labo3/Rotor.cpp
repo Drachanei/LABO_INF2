@@ -7,10 +7,6 @@
 
 using namespace std;
 
-void Rotor::getRotorId() {
-    cout << "rotor id : " << rotorId;
-}
-
 void Rotor::setRotorId(unsigned id) {
     this->rotorId = id;
     this->wiring = ROTOR_WIRINGS.at(id - 1);
@@ -23,11 +19,49 @@ void Rotor::setRotorPosition(char position) {
     wiring = ROTOR_WIRINGS.at(rotorId - 1);
     currentEntry = ENTRY;
 
-    size_t decalage = ENTRY.find(toupper(position));
+    currentPos = ENTRY.find(toupper(position));
 
-    rotate(wiring.begin(), wiring.begin() + decalage, wiring.end());
-    rotate(currentEntry.begin(), currentEntry.begin() + decalage, currentEntry.end());
+    rotate(wiring.begin(), wiring.begin() + currentPos, wiring.end());
+    rotate(currentEntry.begin(), currentEntry.begin() + currentPos, currentEntry.end());
 }
+
+std::string Rotor::getRotorId() {
+    string id;
+    switch (rotorId){
+        case 1:
+            id = "I";
+            break;
+        case 2:
+            id = "II";
+            break;
+        case 3:
+            id = "III";
+            break;
+        case 4:
+            id = "IV";
+            break;
+        case 5:
+            id = "V";
+            break;
+        default:
+            id = "undef";
+    };
+
+    return id;
+}
+
+void Rotor::getRotorConfig() {
+
+    cout << "rotor id       : " << getRotorId() << endl;
+    cout << "entry          : " << ENTRY << endl;
+    cout << "wiring         : " << wiring << endl;
+    cout << "notch          : " << notch << endl;
+    cout << "poisition      : " << ENTRY.at(currentPos) << endl;
+    cout << endl;
+}
+
+
+
 
 bool Rotor::moveRotorNext() {
     rotate(wiring.begin(), wiring.begin() + 1, wiring.end());
@@ -35,13 +69,7 @@ bool Rotor::moveRotorNext() {
 
     return notch == currentEntry.front();
 }
-/*
-char Rotor::outputPos(char input) {
 
-    return wiring.at(ENTRY.find(toupper(input)));
-
-}
-*/
 size_t Rotor::outputPos(size_t position, bool r) {
     if(r){
         return wiring.find(currentEntry.at(position));
@@ -55,3 +83,7 @@ char Rotor::outputChar(size_t position, bool r) {
     }
     return currentEntry.at(position);
 }
+
+
+
+
